@@ -2,9 +2,11 @@
 #include <HTTPClient.h>
 #include <PZEM004Tv30.h>
 
+//Ganti dengan credentials ditempat kalian
 const char* ssid = "Padepokan79_bootcamp";
 const char* password = "Majubersama2020";
 
+//ganti dengan URL server yang diinginkan
 const char* URLOrigin = "http://10.10.20.223:8084/power-monitor";
 
 #if !defined(PZEM_RX_PIN) && !defined(PZEM_TX_PIN)
@@ -131,6 +133,44 @@ void sendToServer() {
   String responseBody = "{" + PZEM0 + "," + PZEM1 + "," + PZEM2 + "," + PZEM3 + "}";
   Serial.println(responseBody);
   int httpResponseCode = http.POST(responseBody);
+  
+/*
+Bentuk API yang dikirimkan
+{
+  "PZEM0":{
+    "voltage":"nan",
+    "current":"nan",
+    "power":"nan",
+    "energy":"nan",
+    "freq":"nan",
+    "pf":"nan"
+  },
+  "PZEM1":{
+    "voltage":"nan",
+    "current":"nan",
+    "power":"nan",
+    "energy":"nan",
+    "freq":"nan",
+    "pf":"nan"
+  },
+  "PZEM2":{
+    "voltage":"nan",
+    "current":"nan",
+    "power":"nan",
+    "energy":"nan",
+    "freq":"nan",
+    "pf":"nan"
+  },
+  "PZEM3":{
+    "voltage":"nan",
+    "current":"nan",
+    "power":"nan",
+    "energy":"nan",
+    "freq":"nan",
+    "pf":"nan"
+  }
+}
+*/
 
   Serial.print("Response : ");
   Serial.println(httpResponseCode);
