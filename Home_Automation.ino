@@ -110,6 +110,7 @@ void loop() {
     Serial.println("-------------------");
     Serial.println();
   }
+  sendToServer();
 
   Serial.println();
   delay(2000);
@@ -123,9 +124,16 @@ void sendToServer() {
 
   // If you need an HTTP request with a content type: application/json, use the following:
   http.addHeader("Content-Type", "application/json");
-  String PZEM1 = "\"PZEM0\":\"voltage\":\""+ String(voltage[0])+ "\"}";
-  int httpResponseCode = http.POST("{\"api_key\":\"tPmAT5Ab3j7F9\",\"sensor\":\"BME280\",\"value1\":\"24.25\",\"value2\":\"49.54\",\"value3\":\"1005.14\"}");
+  String PZEM0 = "\"PZEM0\":{\"voltage\":\""+ String(voltage[0])+ "\",\"current\":\"" + String(current[0]) + "\",\"power\":\"" + String(power[0]) + "\",\"energy\":\"" + String(energy[0]) + "\",\"freq\":\"" + String(frequency[0]) + "\",\"pf\":\"" + String(pF[0]) + "\"}";
+  String PZEM1 = "\"PZEM1\":{\"voltage\":\""+ String(voltage[1])+ "\",\"current\":\"" + String(current[1]) + "\",\"power\":\"" + String(power[0]) + "\",\"energy\":\"" + String(energy[1]) + "\",\"freq\":\"" + String(frequency[1]) + "\",\"pf\":\"" + String(pF[1]) + "\"}";
+  String PZEM2 = "\"PZEM2\":{\"voltage\":\""+ String(voltage[2])+ "\",\"current\":\"" + String(current[2]) + "\",\"power\":\"" + String(power[0]) + "\",\"energy\":\"" + String(energy[2]) + "\",\"freq\":\"" + String(frequency[2]) + "\",\"pf\":\"" + String(pF[2]) + "\"}";
+  String PZEM3 = "\"PZEM3\":{\"voltage\":\""+ String(voltage[3])+ "\",\"current\":\"" + String(current[3]) + "\",\"power\":\"" + String(power[0]) + "\",\"energy\":\"" + String(energy[3]) + "\",\"freq\":\"" + String(frequency[3]) + "\",\"pf\":\"" + String(pF[3]) + "\"}";
+  String responseBody = "{" + PZEM0 + "," + PZEM1 + "," + PZEM2 + "," + PZEM3 + "}";
+  Serial.println(responseBody);
+  int httpResponseCode = http.POST(responseBody);
 
-
+  Serial.print("Response : ");
+  Serial.println(httpResponseCode);
+  http.end();
 }
 
